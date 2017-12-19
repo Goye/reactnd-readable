@@ -1,0 +1,6 @@
+public/
+test/
+config/
+**/node_modules/*
+**/*.bundle.js
+
