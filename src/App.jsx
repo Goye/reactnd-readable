@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
-import style from './App.css';
+import React from 'react';
+import { Route, Switch } from 'react-router';
+import Home from './components/Home';
+import Category from './components/Category';
+import Post from './components/Post';
+import CreateEditPost from './components/CreateEditPost';
 
-class App extends Component {
+class App extends React.PureComponent {
     render() {
         return (
-            <div className={style.app}>
-                <div className={style.appHeader}>
-                    <img className={style.appLogo} alt="logo" />
-                    <h2>Welcome to React</h2>
-                </div>
-                <p className={style.appIntro}>Hello world!</p>
-            </div>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/post/new" component={CreateEditPost} />
+                <Route path="/post/:id/edit" component={CreateEditPost} />
+                <Route path="/:category/:id" component={Post} />
+                <Route path="/:category" component={Category} />
+            </Switch>
         );
     }
 }

@@ -1,8 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
-import './index.css';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import createHistory from 'history';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ConnectedRouter, routerMiddleware, syncHistory } from 'react-router-redux';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+
+import reducers from './reducers';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const history = createHistory();
+const reduxRouterMiddleware = syncHistory(history);
+const middlewares = applyMiddleware(
+    reduxRouterMiddleware,
+    thunkMiddleware,
+    createLogger()
+);
+const store = createStore(
+  reducers,
+  composeEnhancers(middlewares),
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={history}>
+        <App />
+    </Router>
+  </Provider>,
+  document.getElementById('root'),
+);
