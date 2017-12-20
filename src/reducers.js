@@ -8,10 +8,10 @@ import { reducer as postReducer } from './components/post';
 import { reducer as commentsReducer } from './components/comments';
 
 export default combineReducers({
-  router: routerReducer,
-  categories: categoriesReducer,
-  posts: postsReducer,
-  filter: filterReducer,
-  post: postReducer,
-  comments: commentsReducer,
+    router: routerReducer,
+    categories: categoriesReducer,
+    posts: postsReducer,
+    filter: filterReducer,
+    post: postReducer,
+    comments: commentsReducer,
 });
