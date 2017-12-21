@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import { reducer as categoriesReducer } from './components/categoryList';
-import { reducer as postsReducer } from './components/postsList';
-import { reducer as filterReducer } from './components/filters';
-import { reducer as postReducer } from './components/post';
-import { reducer as commentsReducer } from './components/comments';
+import { reducer as categoriesReducer } from './components/CategoryList';
+import { reducer as postsReducer } from './components/PostsList';
+import { reducer as filterReducer } from './components/Filters';
+import { reducer as postReducer } from './components/Post';
+import { reducer as commentsReducer } from './components/Post/Comments';
 
 export default combineReducers({
     router: routerReducer,

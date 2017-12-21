@@ -1,4 +1,4 @@
-import { fetchApiData, deleteApiData, sendApiData, updateApiData } from '../../utils/api';
+import { fetchApiData, deleteApiData, sendApiData, updateApiData } from '../../../utils/api';
 
 const FETCH_POSTS_COMMENTS_SUCCESS = 'FETCH_POSTS_COMMENTS_SUCCESS';
 const REQUEST_FAILURE = 'REQUEST_FAILURE';
@@ -52,7 +52,7 @@ export const saveComment = comment => {
     };
 };
 
-export const editComments = (comment, id) => {
+export const editComment = (comment, id) => {
     return async dispatch => {
         try {
             const res = await updateApiData(`/comments/${id}`, comment);

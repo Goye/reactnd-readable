@@ -57,7 +57,7 @@ class PostsList extends React.PureComponent {
     }
 
     handleVoteScore(id, type) {
-        this.props.vote({ option: type }, id, 'posts', this.props.pathName)
+        this.props.vote({ option: type }, id, 'posts', this.props.pathName);
     }
 
     renderPosts(post) {
@@ -89,7 +89,7 @@ const mapStateToProps = state => {
     return {
         posts: state.posts.posts,
         sort: state.filter.filter,
-        pathName: state.router.location.pathname,
+        pathName: state.router.location ? state.router.location.pathname : null,
     };
 };
 

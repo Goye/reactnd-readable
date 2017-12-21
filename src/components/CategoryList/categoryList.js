@@ -7,7 +7,9 @@ export const fetchCategories = () => {
     return async dispatch => {
         try {
             const res = await fetchApiData('/categories');
-            dispatch(fetchCategoriesSuccess(res));
+            if (res.data) {
+                dispatch(fetchCategoriesSuccess(res.data.categories));
+            }
         } catch (error) {
             dispatch(fetchCategoriesError(error));
         }

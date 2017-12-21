@@ -1,5 +1,5 @@
-import { fetchApiData, deleteApiData, sendApiData } from '../../utils/api';
-import { push } from 'react-router-redux';
+import { fetchApiData, deleteApiData, sendApiData, updateApiData } from '../../utils/api';
+import { push, goBack } from 'react-router-redux';
 
 const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS';
 const REQUEST_FAILURE = 'REQUEST_FAILURE';
@@ -40,6 +40,28 @@ export const vote = (option, id, type) => {
         try {
             await sendApiData(`/${type}/${id}`, option);
             dispatch(fetchPost(id));
+        } catch (error) {
+            dispatch(requestError(error));
+        }
+    };
+};
+
+export const savePost = post => {
+    return async dispatch => {
+        try {
+            await sendApiData('/posts', post);
+            return dispatch(goBack());
+        } catch (error) {
+            dispatch(requestError(error));
+        }
+    };
+};
+
+export const editPost = (post, id) => {
+    return async dispatch => {
+        try {
+            await updateApiData(`/posts/${id}`, post);
+            return dispatch(goBack());
         } catch (error) {
             dispatch(requestError(error));
         }

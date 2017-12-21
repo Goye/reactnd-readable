@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 
-import { saveComment, editComment } from './actions';
+import { saveComment, editComment } from './comments';
 
 class CommentForm extends React.PureComponent {
     constructor(props) {

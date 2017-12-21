@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchPost, deletePost, vote } from './post';
 import CategoryList from '../CategoryList';
-import Comments from './comments';
+import Comments from './Comments';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
@@ -33,7 +33,7 @@ class Post extends React.PureComponent {
             <div className="App">
                 <header className="App-header">
                     <CategoryList />
-                    <hr/>
+                    <hr />
                 </header>
                 <header className="App-header">
                     <h2>{title}</h2>

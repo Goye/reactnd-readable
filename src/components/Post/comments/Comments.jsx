@@ -30,7 +30,7 @@ class Comments extends React.PureComponent {
     }
 
     handleVoteScore(id, type) {
-        this.props.vote({ option: type }, id, 'comments')
+        this.props.vote({ option: type }, id, 'comments');
     }
 
     renderComment(comment) {
@@ -81,7 +81,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     fetchPostComments: id => dispatch(fetchPostComments(id)),
     deleteComments: id => dispatch(deleteComments(id)),
-    changeDataSaved: () => dispatch(changeDataSaved()),
     vote: (options, id, type) => dispatch(vote(options, id, type)),
 });
 

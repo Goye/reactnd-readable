@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import Home from './components/Home';
 import Post from './components/Post';
-import CreateEditPost from './components/CreateEditPost';
+import CreateEditPost from './components/Post/CreateEditPost';
 
 class App extends React.PureComponent {
     render() {
