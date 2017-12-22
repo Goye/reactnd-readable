@@ -58,7 +58,7 @@ class PostsList extends React.PureComponent {
         this.props.vote({ option: type }, id, 'posts', this.props.pathName);
     };
 
-    renderPosts(post) {
+    renderPosts = post => {
         return (
             <PostItem
                 key={post.id}
@@ -68,7 +68,7 @@ class PostsList extends React.PureComponent {
                 handleVoteDown={() => this.handleVoteScore(post.id, 'downVote')}
             />
         );
-    }
+    };
 
     sortPosts(posts) {
         const { sort } = this.props;
@@ -80,7 +80,7 @@ class PostsList extends React.PureComponent {
 
     render() {
         const sortedPosts = this.sortPosts(this.props.posts);
-        return <ul>{sortedPosts && sortedPosts.map(this.renderPosts)}</ul>;
+        return <ul>{sortedPosts && sortedPosts.map(post => this.renderPosts(post))}</ul>;
     }
 }
 
