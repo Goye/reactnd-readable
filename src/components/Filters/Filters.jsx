@@ -4,17 +4,21 @@ import { connect } from 'react-redux';
 import { changeFilter } from './filters';
 
 class Filters extends React.PureComponent {
-    changeFilter(type) {
+    changeFilter = type => {
         this.props.changeFilter(type);
-    }
+    };
 
     render() {
         return (
             <div>
                 <p>Filter by: </p>
-                <button onClick={() => this.changeFilter('score')}>score</button>
+                <button className="btn btn-default" onClick={() => this.changeFilter('score')}>
+                    score
+                </button>
                 <span> | </span>
-                <button onClick={() => this.changeFilter('date')}>date</button>
+                <button className="btn btn-default" onClick={() => this.changeFilter('date')}>
+                    date
+                </button>
             </div>
         );
     }

@@ -8,60 +8,70 @@ import CommentForm from './CommentForm';
 class Comments extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.deleteComment = this.deleteComment.bind(this);
-        this.renderComment = this.renderComment.bind(this);
-        this.handleAddComment = this.handleAddComment.bind(this);
         this.state = {
             addCommentIsOpen: false,
         };
     }
     componentDidMount() {
-        this.props.fetchPostComments(this.props.id);
+        const { id } = this.props;
+        if (id) {
+            this.props.fetchPostComments(id);
+        }
     }
 
     componentDidUpdate() {
-        if (this.props.dataSaved) {
+        const { dataSaved } = this.props;
+        if (dataSaved) {
             this.setState({ addCommentIsOpen: false });
         }
     }
 
-    deleteComment(id) {
+    deleteComment = id => {
         this.props.deleteComments(id);
-    }
+    };
 
-    handleVoteScore(id, type) {
+    handleVoteScore = (id, type) => {
         this.props.vote({ option: type }, id, 'comments');
-    }
+    };
 
-    renderComment(comment) {
+    renderComment = comment => {
         return (
             <CommentItem
                 key={comment.id}
                 data={comment}
                 dataSaved={this.props.dataSaved}
                 handleDelete={() => this.deleteComment(comment.id)}
-                handleEdit={() => this.editComment(comment.id)}
                 handleVoteUp={() => this.handleVoteScore(comment.id, 'upVote')}
                 handleVoteDown={() => this.handleVoteScore(comment.id, 'downVote')}
             />
         );
-    }
+    };
 
-    handleAddComment() {
+    handleAddComment = () => {
         this.setState({ addCommentIsOpen: !this.state.addCommentIsOpen });
-    }
+    };
+
+    onCommentAdded = () => {
+        this.setState({ addCommentIsOpen: false });
+    };
 
     render() {
+        const { addCommentIsOpen } = this.state;
+        const { comments, id } = this.props;
         return (
             <div className="App">
                 <header className="App-header">
-                    <h2>Commets ({this.props.comments.length})</h2>
-                    <button onClick={this.handleAddComment}>ADD COMMENT</button>
+                    <h4>Commets ({comments.length})</h4>
+                    <button className={'btn btn-default'} onClick={this.handleAddComment}>
+                        ADD COMMENT
+                    </button>
                     <hr />
                 </header>
-                {this.state.addCommentIsOpen && <CommentForm parentId={this.props.id} />}
+                {addCommentIsOpen && (
+                    <CommentForm parentId={id} onCommentAdded={this.onCommentAdded} />
+                )}
                 <hr />
-                {this.props.comments.map(this.renderComment)}
+                {comments.map(comment => this.renderComment(comment))}
             </div>
         );
     }

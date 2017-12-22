@@ -8,7 +8,7 @@ export const fetchPost = id => {
     return async dispatch => {
         try {
             const res = await fetchApiData(`/posts/${id}`);
-            if (Object.keys(res.data).length) {
+            if (res.data) {
                 return dispatch(fetchPostSuccess(res.data));
             }
         } catch (error) {
@@ -17,9 +17,9 @@ export const fetchPost = id => {
     };
 };
 
-export const fetchPostSuccess = comments => ({
+export const fetchPostSuccess = post => ({
     type: FETCH_POST_SUCCESS,
-    comments,
+    post,
 });
 
 export const deletePost = id => {

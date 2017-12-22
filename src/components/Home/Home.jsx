@@ -17,7 +17,7 @@ class Home extends React.PureComponent {
                     <Filters />
                 </header>
                 <hr />
-                <h2>Posts</h2>
+                <h3>Posts</h3>
                 {match && match.params.category ? (
                     <PostsList filter={match.params.category} />
                 ) : (

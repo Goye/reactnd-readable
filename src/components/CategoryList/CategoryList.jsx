@@ -20,15 +20,15 @@ class CategoryList extends React.PureComponent {
         return <CategoryItem key={category.name} data={category} />;
     }
     render() {
+        const { categories } = this.props;
         return (
-            <nav>
+            <nav className="navbar navbar-default text-center">
                 <div>
                     <span>
                         <Link to="/">home</Link> |{' '}
                     </span>
-                    {this.props.categories.map(this.renderCategories)}
+                    {categories.map(this.renderCategories)}
                 </div>
-                <hr />
             </nav>
         );
     }

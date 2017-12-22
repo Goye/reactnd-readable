@@ -5,48 +5,67 @@ import moment from 'moment';
 class CommentItem extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.handleEdit = this.handleEdit.bind(this);
         this.state = {
             editCommentIsOpen: false,
         };
     }
 
     componentDidUpdate() {
-        if (this.props.dataSaved) {
+        const { dataSaved } = this.props;
+        if (dataSaved) {
             this.setState({ editCommentIsOpen: false });
         }
     }
 
-    handleEdit() {
+    handleEdit = () => {
         this.setState({
             editCommentIsOpen: !this.state.editCommentIsOpen,
         });
-    }
+    };
+
+    onCommentUpdated = () => {
+        this.setState({ editCommentIsOpen: false });
+    };
 
     render() {
-        const { author, body, voteScore, timestamp, id } = this.props.data;
-        const date = moment(timestamp).format('ll');
+        const { editCommentIsOpen } = this.state;
+        const { data, handleVoteDown, handleVoteUp, handleDelete, parent } = this.props;
+        const { author, body, voteScore, timestamp, id } = data;
+        const date = moment(timestamp).format('DD/MM/YYYY');
         return (
             <div>
-                <p>{author}</p>
-                <p>date: {date}</p>
+                <p>
+                    <strong>{author}</strong>
+                </p>
+                <p>
+                    date: <strong>{date}</strong>
+                </p>
                 <p>
                     score:{' '}
                     <span>
-                        <button onClick={this.props.handleVoteDown}>-</button>
+                        <button onClick={handleVoteDown}>-</button>
                         <span> {voteScore} </span>
-                        <button onClick={this.props.handleVoteUp}>+</button>
+                        <button onClick={handleVoteUp}>+</button>
                     </span>
                 </p>
                 <p>{body}</p>
-                <button onClick={this.props.handleEdit}>EDIT COMMENT</button>
+                <button className="btn btn-default" onClick={this.handleEdit}>
+                    EDIT COMMENT
+                </button>
                 <span> | </span>
-                <button onClick={this.props.handleDelete}>DELETE COMMENT</button>
+                <button className="btn btn-default" onClick={handleDelete}>
+                    DELETE COMMENT
+                </button>
                 <hr />
-                {this.state.editCommentIsOpen && (
-                    <CommentForm id={id} parentId={this.props.parent} body={body} edit={true} />
+                {editCommentIsOpen && (
+                    <CommentForm
+                        id={id}
+                        parentId={parent}
+                        body={body}
+                        edit={true}
+                        onCommentUpdated={this.onCommentUpdated}
+                    />
                 )}
-                <hr />
             </div>
         );
     }

@@ -12,62 +12,65 @@ class CommentForm extends React.PureComponent {
             body: this.props.body || '',
             parentId: this.props.parentId,
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleEditSubmit = this.handleEditSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(event) {
+    handleChange = event => {
         const target = event.target;
         this.setState({
             [target.name]: target.type === 'checkbox' ? target.checked : target.value,
         });
-    }
+    };
 
-    handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault();
+        const { saveComment, onCommentAdded } = this.props;
         const comment = {
             id: uuidv1(),
             timestamp: Date.now(),
             ...this.state,
         };
-        this.props.saveComment(comment);
-    }
+        saveComment(comment);
+        onCommentAdded();
+    };
 
-    handleEditSubmit(event) {
+    handleEditSubmit = event => {
         event.preventDefault();
+        const { editComment, onCommentUpdated } = this.props;
         const comment = {
             timestamp: Date.now(),
             body: this.state.body,
         };
-        this.props.editComment(comment, this.props.id);
-    }
+        editComment(comment, this.props.id);
+        onCommentUpdated();
+    };
 
     render() {
+        const { edit } = this.props;
+        const { author, body } = this.state;
         return (
-            <form onSubmit={this.props.edit ? this.handleEditSubmit : this.handleSubmit}>
-                {!this.props.edit && (
+            <form onSubmit={edit ? this.handleEditSubmit : this.handleSubmit}>
+                {!edit && (
                     <p>
-                        <label htmlFor="author">name:</label>
+                        <label htmlFor="author">name:</label>{' '}
                         <input
                             type="text"
                             name="author"
-                            value={this.state.author}
+                            value={author}
                             onChange={this.handleChange}
                         />
                     </p>
                 )}
                 <p>
-                    <label htmlFor="body">comment: </label>
+                    <label htmlFor="body">comment: </label>{' '}
                     <textarea
                         name="body"
                         cols="30"
                         rows="10"
-                        value={this.state.body}
+                        value={body}
                         onChange={this.handleChange}
                     />
                 </p>
-                <button>submit</button>
+                <button className="btn btn-default">submit</button>
             </form>
         );
     }

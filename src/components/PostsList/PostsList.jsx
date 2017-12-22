@@ -9,7 +9,9 @@ const PostItem = props => {
     return (
         <div>
             <Link to={url}>{title}</Link>
-            <p>author: {author}</p>
+            <p>
+                author: <strong>{author}</strong>
+            </p>
             <p>
                 Score:{' '}
                 <span>
@@ -25,19 +27,15 @@ const PostItem = props => {
             <hr />
             <Link to={`/post/${id}/edit`}>EDIT POST</Link>
             <span> | </span>
-            <button onClick={props.handleDelete}>DELETE POST</button>
+            <button className="btn btn-default" onClick={props.handleDelete}>
+                DELETE POST
+            </button>
             <hr />
         </div>
     );
 };
 
 class PostsList extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.renderPosts = this.renderPosts.bind(this);
-    }
-
     componentDidMount() {
         if (this.props.filter) {
             this.props.fetchCategoryPosts(this.props.filter);
@@ -52,13 +50,13 @@ class PostsList extends React.PureComponent {
         }
     }
 
-    handleDelete(id, category) {
+    handleDelete = (id, category) => {
         this.props.deletePost(id, category);
-    }
+    };
 
-    handleVoteScore(id, type) {
+    handleVoteScore = (id, type) => {
         this.props.vote({ option: type }, id, 'posts', this.props.pathName);
-    }
+    };
 
     renderPosts(post) {
         return (
@@ -73,7 +71,8 @@ class PostsList extends React.PureComponent {
     }
 
     sortPosts(posts) {
-        if (this.props.sort === '' || this.props.sort === 'score') {
+        const { sort } = this.props;
+        if (sort === '' || sort === 'score') {
             return posts.sort((a, b) => b.voteScore - a.voteScore);
         }
         return posts.sort((a, b) => b.timestamp - a.timestamp);

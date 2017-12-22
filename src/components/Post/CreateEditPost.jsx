@@ -15,10 +15,6 @@ class CreateEditPost extends React.PureComponent {
             body: '',
             category: '',
         };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleEditSubmit = this.handleEditSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -34,75 +30,76 @@ class CreateEditPost extends React.PureComponent {
         });
     }
 
-    handleChange(event) {
+    handleChange = event => {
         const target = event.target;
         this.setState({
             [target.name]: target.type === 'checkbox' ? target.checked : target.value,
         });
-    }
+    };
 
-    handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault();
+        const { savePost } = this.props;
         const post = {
             id: uuidv1(),
             timestamp: Date.now(),
             ...this.state,
         };
-        this.props.savePost(post);
-    }
+        savePost(post);
+    };
 
-    handleEditSubmit(event) {
+    handleEditSubmit = event => {
         event.preventDefault();
+        const { editPost } = this.props;
         const post = {
             title: this.state.title,
             body: this.state.body,
         };
-        this.props.editPost(post, this.props.match.params.id, this.props.post.category);
-    }
+        editPost(post, this.props.match.params.id, this.props.post.category);
+    };
 
     render() {
+        const { match } = this.props;
+        const { title, body, author } = this.state;
         return (
             <div>
                 <header className="App-header">
                     <CategoryList />
                     <hr />
                 </header>
-                <h2>{this.props.match.params.id ? 'Edit post' : 'Create new post'}</h2>
-                <form
-                    onSubmit={
-                        this.props.match.params.id ? this.handleEditSubmit : this.handleSubmit
-                    }>
+                <h3>{match.params.id ? 'Edit post' : 'Create new post'}</h3>
+                <form onSubmit={match.params.id ? this.handleEditSubmit : this.handleSubmit}>
                     <p>
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="title">Title:</label>{' '}
                         <input
                             type="text"
                             name="title"
-                            value={this.state.title}
+                            value={title}
                             onChange={this.handleChange}
                         />
                     </p>
                     <p>
-                        <label htmlFor="body">body:</label>
+                        <label htmlFor="body">body:</label>{' '}
                         <textarea
                             name="body"
                             cols="30"
                             rows="10"
-                            value={this.state.body}
+                            value={body}
                             onChange={this.handleChange}
                         />
                     </p>
-                    {!this.props.match.params.id && (
+                    {!match.params.id && (
                         <p>
-                            <label htmlFor="author">author:</label>
+                            <label htmlFor="author">author:</label>{' '}
                             <input
                                 type="text"
                                 name="author"
-                                value={this.state.author}
+                                value={author}
                                 onChange={this.handleChange}
                             />
                         </p>
                     )}
-                    {!this.props.match.params.id && (
+                    {!match.params.id && (
                         <p>
                             <input
                                 type="radio"
@@ -128,7 +125,7 @@ class CreateEditPost extends React.PureComponent {
                         </p>
                     )}
 
-                    <button>submit</button>
+                    <button className="btn btn-default">submit</button>
                 </form>
             </div>
         );
