@@ -5,7 +5,7 @@ import { reducer as categoriesReducer } from './components/CategoryList';
 import { reducer as postsReducer } from './components/PostsList';
 import { reducer as filterReducer } from './components/Filters';
 import { reducer as postReducer } from './components/Post';
-import { reducer as commentsReducer } from './components/Post/Comments';
+import { reducer as commentsReducer } from './components/Post/Comment';
 
 export default combineReducers({
     router: routerReducer,

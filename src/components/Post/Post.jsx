@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPost, deletePost, vote } from './post';
 import CategoryList from '../CategoryList';
-import Comments from './Comments';
+import Comments from './Comment';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 

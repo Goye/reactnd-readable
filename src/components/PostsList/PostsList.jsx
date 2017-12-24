@@ -44,9 +44,12 @@ class PostsList extends React.PureComponent {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.filter !== this.props.filter) {
-            this.props.fetchCategoryPosts(this.props.filter);
+    componentWillReceiveProps(nextProps) {
+        const { filter } = nextProps;
+        if (filter && filter !== this.props.filter) {
+            this.props.fetchCategoryPosts(filter);
+        } else if (!filter && filter !== this.props.filter) {
+            this.props.fetchPosts();
         }
     }
 
