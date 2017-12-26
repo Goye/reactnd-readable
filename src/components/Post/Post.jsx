@@ -25,7 +25,8 @@ class Post extends React.PureComponent {
     };
 
     render() {
-        const { post: { title, author, timestamp, voteScore, body, id }, error } = this.props;
+        const { post: { title, author, timestamp, voteScore, body, id } } = this.props;
+        const error = this.props.error || !Object.keys(this.props.post).length ? true : false;
         const date = formatDate(timestamp);
         return (
             <NotFound error={error}>
