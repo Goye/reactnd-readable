@@ -23,11 +23,14 @@ class CreateEditPost extends React.PureComponent {
         }
     }
 
-    componentDidUpdate() {
-        this.setState({
-            title: this.state.title || this.props.post.title,
-            body: this.state.body || this.props.post.body,
-        });
+    componentWillReceiveProps(nextProps) {
+        const { post: { title, body } } = nextProps;
+        if (title) {
+            this.setState({
+                title,
+                body,
+            });
+        }
     }
 
     handleChange = event => {

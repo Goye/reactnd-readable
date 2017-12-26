@@ -5,27 +5,24 @@ import PostsList from '../PostsList';
 import Filters from '../Filters';
 import { Link } from 'react-router-dom';
 
-class Home extends React.PureComponent {
-    render() {
-        const { match } = this.props;
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <CategoryList />
-                    <Link to="/post/new">Create post</Link>
-                    <hr />
-                    <Filters />
-                </header>
+const Home = ({ match }) => {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <CategoryList />
+                <Link to="/post/new">Create post</Link>
                 <hr />
-                <h3>Posts</h3>
-                {match && match.params.category ? (
-                    <PostsList filter={match.params.category} />
-                ) : (
-                    <PostsList />
-                )}
-            </div>
-        );
-    }
-}
+                <Filters />
+            </header>
+            <hr />
+            <h3>Posts</h3>
+            {match && match.params.category ? (
+                <PostsList filter={match.params.category} />
+            ) : (
+                <PostsList />
+            )}
+        </div>
+    );
+};
 
 export default Home;

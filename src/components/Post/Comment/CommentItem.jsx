@@ -1,10 +1,10 @@
 import React from 'react';
 import CommentForm from './CommentForm';
-import moment from 'moment';
+import { formatDate } from '../../../utils/helpers';
 
 class CommentItem extends React.PureComponent {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             editCommentIsOpen: false,
         };
@@ -29,9 +29,14 @@ class CommentItem extends React.PureComponent {
 
     render() {
         const { editCommentIsOpen } = this.state;
-        const { data, handleVoteDown, handleVoteUp, handleDelete, parent } = this.props;
-        const { author, body, voteScore, timestamp, id } = data;
-        const date = moment(timestamp).format('DD/MM/YYYY');
+        const {
+            data: { author, body, voteScore, timestamp, id },
+            handleVoteDown,
+            handleVoteUp,
+            handleDelete,
+            parent,
+        } = this.props;
+        const date = formatDate(timestamp);
         return (
             <div>
                 <p>

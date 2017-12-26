@@ -4,7 +4,8 @@ import { fetchPost, deletePost, vote } from './post';
 import CategoryList from '../CategoryList';
 import Comments from './Comment';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import { formatDate } from '../../utils/helpers';
+import NotFound from '../../NotFound';
 
 class Post extends React.PureComponent {
     componentDidMount() {
@@ -24,56 +25,58 @@ class Post extends React.PureComponent {
     };
 
     render() {
-        const { post } = this.props;
-        const { title, author, timestamp, voteScore, body, id } = post;
-        const date = moment(timestamp).format('DD/MM/YYYY');
+        const { post: { title, author, timestamp, voteScore, body, id }, error } = this.props;
+        const date = formatDate(timestamp);
         return (
-            <div className="App">
-                <header className="App-header">
-                    <CategoryList />
+            <NotFound error={error}>
+                <div className="App">
+                    <header className="App-header">
+                        <CategoryList />
+                        <hr />
+                    </header>
+                    <header className="App-header">
+                        <h3>{title}</h3>
+                        <p>
+                            author: <strong>{author}</strong>
+                        </p>
+                        <p>
+                            date: <strong>{date}</strong>
+                        </p>
+                        <p>
+                            score:{' '}
+                            <span>
+                                <button
+                                    className={'btn-group btn-group-sm'}
+                                    onClick={() => this.handleVoteScore(id, 'downVote')}>
+                                    -
+                                </button>
+                                <span> {voteScore} </span>
+                                <button
+                                    className={'btn-group btn-group-sm'}
+                                    onClick={() => this.handleVoteScore(id, 'upVote')}>
+                                    +
+                                </button>
+                            </span>
+                        </p>
+                        <Link to={`/post/${id}/edit`}>EDIT POST</Link>
+                        <span> | </span>
+                        <button className={'btn btn-default'} onClick={this.handleDelete}>
+                            DELETE POST
+                        </button>
+                        <hr />
+                    </header>
+                    <p>{body}</p>
                     <hr />
-                </header>
-                <header className="App-header">
-                    <h3>{title}</h3>
-                    <p>
-                        author: <strong>{author}</strong>
-                    </p>
-                    <p>
-                        date: <strong>{date}</strong>
-                    </p>
-                    <p>
-                        score:{' '}
-                        <span>
-                            <button
-                                className={'btn-group btn-group-sm'}
-                                onClick={() => this.handleVoteScore(id, 'downVote')}>
-                                -
-                            </button>
-                            <span> {voteScore} </span>
-                            <button
-                                className={'btn-group btn-group-sm'}
-                                onClick={() => this.handleVoteScore(id, 'upVote')}>
-                                +
-                            </button>
-                        </span>
-                    </p>
-                    <Link to={`/post/${id}/edit`}>EDIT POST</Link>
-                    <span> | </span>
-                    <button className={'btn btn-default'} onClick={this.handleDelete}>
-                        DELETE POST
-                    </button>
-                    <hr />
-                </header>
-                <p>{body}</p>
-                <hr />
-                {post.id && <Comments id={id} />}
-            </div>
+                    {id && <Comments id={id} />}
+                </div>
+            </NotFound>
         );
     }
 }
 
 const mapStateToProps = state => ({
     post: state.post.postDetail,
+    error: state.post.error,
 });
 
 const mapDispatchToProps = dispatch => ({

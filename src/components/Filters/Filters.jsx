@@ -3,26 +3,21 @@ import { connect } from 'react-redux';
 
 import { changeFilter } from './filters';
 
-class Filters extends React.PureComponent {
-    changeFilter = type => {
-        this.props.changeFilter(type);
-    };
-
-    render() {
-        return (
-            <div>
-                <p>Filter by: </p>
-                <button className="btn btn-default" onClick={() => this.changeFilter('score')}>
-                    score
-                </button>
-                <span> | </span>
-                <button className="btn btn-default" onClick={() => this.changeFilter('date')}>
-                    date
-                </button>
-            </div>
-        );
-    }
-}
+const Filters = props => {
+    const { changeFilter } = props;
+    return (
+        <div>
+            <p>Filter by: </p>
+            <button className="btn btn-default" onClick={() => changeFilter('score')}>
+                score
+            </button>
+            <span> | </span>
+            <button className="btn btn-default" onClick={() => changeFilter('date')}>
+                date
+            </button>
+        </div>
+    );
+};
 
 const mapDispatchToProps = dispatch => ({
     changeFilter: filter => dispatch(changeFilter(filter)),
